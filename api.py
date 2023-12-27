@@ -9,3 +9,13 @@ app.config["MYSQL_DB"] = "mydb"
 
 
 mysql = MySQL(app)
+
+
+@app.route('/')
+def index():
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM customers")
+    customers = cur.fetchall()
+    cur.close()
+
+    return render_template('index.html', customers=customers)
