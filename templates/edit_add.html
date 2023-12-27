@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if customer %}Edit Customer{% else %}Add Customer{% endif %}</title>
+    <style>
+        /* Basic Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f6f6f6;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="country"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <h1>{% if customer %}Edit Customer{% else %}Add Customer{% endif %}</h1>
+    <form method="POST" action="{% if customer %}{{ url_for('edit', id=customer[0]) }}{% else %}{{ url_for('add') }}{% endif %}">
+        <label for="last_name">Last Name:</label>
+        <input type="text" id="last_name" name="last_name" value="{% if customer %}{{ customer[1] }}{% endif %}" required><br>
+
+        <label for="first_name">First Name:</label>
+        <input type="text" id="first_name" name="first_name" value="{% if customer %}{{ customer[2] }}{% endif %}" required><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="{% if customer %}{{ customer[3] }}{% endif %}" required><br>
+
+        <label for="phonenumber">Phone Number:</label>
+        <input type="text" id="phonenumber" name="phonenumber" value="{% if customer %}{{ customer[4] }}{% endif %}" required><br>
+
+        <label for="country">Country:</label>
+        <input type="country" id="country" name="country" value="{% if customer %}{{ customer[5] }}{% endif %}" required><br>
+
+        <button type="submit">{% if customer %}Update{% else %}Add{% endif %}</button>
+    </form>
+</body>
+</html>
