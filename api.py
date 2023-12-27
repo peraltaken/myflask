@@ -55,3 +55,15 @@ def edit(id):
         cur.close()
 
         return render_template('edit_add.html', customer=customer)
+    
+@app.route('/delete/<int:id>')
+def delete(id):
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM customers WHERE id = %s", (id,))
+    mysql.connection.commit()
+    cur.close()
+
+    return redirect(url_for('index'))
+
+if __name__ == '__main__':
+    app.run(debug=True)
