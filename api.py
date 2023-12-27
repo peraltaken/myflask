@@ -34,3 +34,24 @@ def add():
         cur.close()
 
         return redirect(url_for('index'))
+    
+@app.route('/edit/<int:id>', methods=['GET', 'POST'])
+def edit(id):
+    cur = mysql.connection.cursor()
+    if request.method == 'POST':
+        last_name = request.form['last_name']        
+        first_name = request.form['first_name']
+        email = request.form['email']
+        phonenumber = request.form['phonenumber']
+        country = request.form['country']
+        cur.execute("UPDATE customers SET last_name=%s, first_name=%s, email=%s, phonenumber=%s, country=%s WHERE id=%s", (last_name, first_name, email, phonenumber, country, id))
+        mysql.connection.commit()
+        cur.close()
+
+        return redirect(url_for('index'))
+    else:
+        cur.execute("SELECT * FROM customers WHERE id = %s", (id,))
+        customer = cur.fetchone()
+        cur.close()
+
+        return render_template('edit_add.html', customer=customer)
