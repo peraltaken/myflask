@@ -19,3 +19,18 @@ def index():
     cur.close()
 
     return render_template('index.html', customers=customers)
+
+@app.route('/add', methods=['POST'])
+def add():
+    if request.method == 'POST':
+        last_name = request.form['last_name']        
+        first_name = request.form['first_name']
+        email = request.form['email']
+        phonenumber = request.form['phonenumber']
+        country = request.form['country']
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO customers (last_name, first_name, email, phonenumber, country) VALUES (%s, %s, %s, %s, %s)", (last_name, first_name, email, phonenumber, country))
+        mysql.connection.commit()
+        cur.close()
+
+        return redirect(url_for('index'))
